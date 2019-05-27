@@ -1,4 +1,4 @@
-# binding - Simple Book mode for CodiMD #
+# binding - simple book mode for CodiMD #
 
 ## Setup ##
 
