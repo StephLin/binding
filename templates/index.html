@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>MCL Notebook</title>
+        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" charset="utf-8"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js" charset="utf-8"></script>
+    </head>
+    <body style="margin: 0px; overflow: hidden;">
+        <aside id="summary" class="summary" style="position: absolute;">
+            <h1>MCL Notebook</h1>
+            <div class="content">
+                {{ .summary }}
+            </div>
+        </aside>
+        <main>
+            <iframe id="main-body" src="{{ .page }}" frameborder="0"></iframe>
+        </main>
+
+        <script charset="utf-8">
+            $(document).ready(function () {
+                $("a").each(function() {
+                    var href = $(this).attr("href");
+                    $(this).attr("href", "/?uri=" + href);
+                    $(this).attr("src", href);
+                });
+                $("aside>.content>ul").append("<hr>");
+            });
+
+            $("a").click(function (event) {
+                event.preventDefault();
+                history.pushState("data", "", $(this).attr("href"));
+                $("#main-body").attr("src", $(this).attr("src"));
+            });
+
+            $("#summary").resizable({
+                handles: "e",
+                stop: function( event, ui ) {
+                    $("main").css({
+                        "display": "block",
+                        "left": ui.size.width + 10,
+                        "right": 0,
+                    });
+                },
+                minWidth: 20,
+            });
+
+            $("#summary").on("resize", function(event, ui) {
+                $(this).css({
+                    "height": "100%",
+                    "overflow-x": "hidden",
+                });
+                $("main").css({
+                    "display": "none"
+                });
+            });
+
+            $(".ui-resizable-handle.ui-resizable-e").css({
+                "height": $("aside>div").css("height"),
+            })
+
+        </script>
+    </body>
+</html>
