@@ -3,7 +3,9 @@
 ## Setup ##
 
 ```bash
-git clone https://github.com/stephlin/binding
+# git clone https://github.com/stephlin/binding
+go get github.com/stephlin/binding
+cd $GOPATH/src/github.com/stephlin/binding
 govendor sync
 ```
 
